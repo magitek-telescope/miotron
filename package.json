@@ -1,0 +1,28 @@
+{
+  "name": "miotron",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "fmt": "prettier-eslint './index.js' --write"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "electron": "^1.7.9",
+    "electron-config": "^1.0.0",
+    "electron-oauth-iijmio": "0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-flowtype": "^2.39.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "prettier": "^1.8.1",
+    "prettier-eslint": "^8.2.1",
+    "prettier-eslint-cli": "^4.4.0"
+  }
+}
