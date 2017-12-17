@@ -22,15 +22,14 @@ function main () {
   getToken()
     .then(credential => {
       config.set('token', credential.access_token)
-      axios.defaults.headers.common['X-IIJmio-Authorization'] =
-        credential.access_token
-      return getCoupon()
-    })
-    .then(volume => {
-      scheduler()
-      setInterval(() => {
+      axios.defaults.headers.common['X-IIJmio-Authorization'] = credential.access_token
+      app.on('ready', () => {
+        tray = new Tray(__dirname + '/icons/icon.png')
         scheduler()
-      }, 180000)
+        setInterval(() => {
+          scheduler()
+        }, 180000)
+      })
     })
     .catch(err => {
       console.log(err)
@@ -38,18 +37,21 @@ function main () {
 }
 
 function scheduler () {
-  tray = new Tray(__dirname + '/icons/icon.png')
-  contextMenu = Menu.buildFromTemplate([
-    { label: `miotron v${app.getVersion()}` },
-    { label: `今月のクーポン残量: ${volume}MB` },
-    {
-      label: '閉じる',
-      click: () => {
-        app.quit()
+  getCoupon()
+  .then((v)=>{
+    volume = v
+    contextMenu = Menu.buildFromTemplate([
+      { label: `miotron v${app.getVersion()}` },
+      { label: `今月のクーポン残量: ${volume}MB` },
+      {
+        label: '閉じる',
+        click: () => {
+          app.quit()
+        }
       }
-    }
-  ])
-  tray.setContextMenu(contextMenu)
+    ])
+    tray.setContextMenu(contextMenu)
+  })
 }
 
 function getToken () {
